@@ -132,9 +132,13 @@ class userAuthController {
           },
         },
       });
-
-      res.cookie("accessToken", accessToken, { httpOnly: true });
-      res.cookie("refreshToken", refreshToken, { httpOnly: true });
+      const cookieOptions = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      };
+      res.cookie("accessToken", accessToken, cookieOptions);
+      res.cookie("refreshToken", refreshToken, cookieOptions);
 
       return res.status(200).json({
         success: true,
@@ -237,8 +241,12 @@ class userAuthController {
         process.env.JWT_ACCESS_SECRET_KEY,
         { expiresIn: "15m" },
       );
-
-      res.cookie("accessToken", newAccessToken, { httpOnly: true });
+      const cookieOptions = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      };
+      res.cookie("accessToken", accessToken, cookieOptions);
       return res.status(200).json({
         success: true,
         message: "Token refreshed",
