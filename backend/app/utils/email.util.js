@@ -14,7 +14,7 @@ const transporter = nodemailer.createTransport({
 const sendEmail = async ({ to, subject, html }) => {
   try {
     const info = await transporter.sendMail({
-      from: `"Product Management System" <${process.env.SMTP_EMAIL}>`,
+      from: `"Product Management System" <${process.env.SMTP_FROM}>`,
       to,
       subject,
       html,
