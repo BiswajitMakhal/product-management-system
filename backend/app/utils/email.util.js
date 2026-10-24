@@ -19,6 +19,7 @@ const sendEmail = async ({ to, subject, html }) => {
         user: process.env.SMTP_EMAIL,
         pass: process.env.SMTP_PASSWORD,
       },
+       family: 4,//for render(cloud hosting server)
     });
 
     await transporter.sendMail({
